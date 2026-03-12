@@ -231,34 +231,32 @@ export default function HomePage() {
           </button>
         </div>
 
-        <AnimatePresence>
-          {menuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className="md:hidden overflow-hidden"
-              style={{ backgroundColor: "rgba(6,13,26,0.98)", borderBottom: `1px solid ${THEME.border}` }}
-            >
-              <div className="px-5 py-4 flex flex-col gap-0">
-                {NAV_LINKS.map((link) => (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    onClick={(e) => { e.preventDefault(); scrollTo(link.href); }}
-                    className="py-3.5 text-xs font-semibold tracking-widest uppercase cursor-pointer"
-                    style={{ color: activeSection === link.href.replace("#", "") ? THEME.teal : THEME.textSecondary, borderBottom: `1px solid ${THEME.border}` }}
-                  >
-                    {link.label}
-                  </a>
-                ))}
-                <a href={`tel:${SITE.phone}`} className="mt-4 py-3.5 text-center text-xs font-black tracking-wider uppercase rounded-full cursor-pointer" style={{ backgroundColor: THEME.teal, color: THEME.bg }}>
-                  Call Now
-                </a>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {menuOpen && (
+          <div
+            className="md:hidden"
+            style={{ backgroundColor: "rgba(6,13,26,0.98)", borderBottom: `1px solid ${THEME.border}` }}
+          >
+            <div className="px-5 py-4 flex flex-col gap-0">
+              {NAV_LINKS.map((link) => (
+                <button
+                  key={link.href}
+                  onClick={() => {
+                    setMenuOpen(false);
+                    const el = document.getElementById(link.href.replace("#", ""));
+                    if (el) el.scrollIntoView({ behavior: "smooth" });
+                  }}
+                  className="py-3.5 text-left text-xs font-semibold tracking-widest uppercase cursor-pointer w-full"
+                  style={{ color: activeSection === link.href.replace("#", "") ? THEME.teal : THEME.textSecondary, borderBottom: `1px solid ${THEME.border}`, background: "none", border: "none", borderBottom: `1px solid ${THEME.border}` }}
+                >
+                  {link.label}
+                </button>
+              ))}
+              <a href={`tel:${SITE.phone}`} className="mt-4 py-3.5 text-center text-xs font-black tracking-wider uppercase rounded-full cursor-pointer" style={{ backgroundColor: THEME.teal, color: THEME.bg }}>
+                Call Now
+              </a>
+            </div>
+          </div>
+        )}
       </header>
 
       {/* Hero */}
