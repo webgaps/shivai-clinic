@@ -169,8 +169,8 @@ export default function HomePage() {
   }, []);
 
   const scrollTo = (href) => {
-    setMenuOpen(false);
     document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+    setTimeout(() => setMenuOpen(false), 80);
   };
 
   return (
